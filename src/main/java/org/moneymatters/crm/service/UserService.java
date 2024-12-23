@@ -1,7 +1,7 @@
 package org.moneymatters.crm.service;
 
 import org.moneymatters.crm.entity.User;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -15,12 +15,11 @@ public interface UserService {
     User getUser(long id);
 
     //Add a user
-    String addUser(User newUser);
+    User addUser(User newUser);
 
     //Update details of a User;
     User updateUserDetails(User newDetails);
 
     //Delete User
     String deleteUser(long id);
-
 }
