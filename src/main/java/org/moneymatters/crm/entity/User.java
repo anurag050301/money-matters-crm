@@ -1,21 +1,37 @@
-package org.moneymatters.crm.Entity;
+package org.moneymatters.crm.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //User information
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    @Column(name = "last_name",nullable = false)
     private String lastName;
+    @Column(name = "phone_number",nullable = false, unique = true)
     private String phoneNumber;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String country;
 
-    // Getters and Setters
-
-
-    public String getPhoneNumber() {
-        return phoneNumber;
+    //Getter and Setters
+    public Long getId() {
+        return id;
     }
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setId(Long id) {
+        this.id = id;
     }
     public String getUsername() {
         return username;
@@ -35,6 +51,12 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     public String getEmail() {
         return email;
     }
@@ -47,29 +69,42 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+
 
     //Constructor
-    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password) {
+    public User() {
+    }
+    public User(Long id, String username, String firstName, String lastName, String phoneNumber, String email, String password, String country) {
+        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
-    }
-    public User() {
+        this.country = country;
     }
 
-    //To String method
+
+    //To String function
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 }
