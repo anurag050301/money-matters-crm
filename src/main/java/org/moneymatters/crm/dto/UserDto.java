@@ -1,6 +1,5 @@
 package org.moneymatters.crm.dto;
 
-import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Getter

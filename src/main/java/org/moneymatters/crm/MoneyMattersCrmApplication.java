@@ -1,7 +1,5 @@
 package org.moneymatters.crm;
 
-import org.moneymatters.crm.dto.UserDto;
-import org.moneymatters.crm.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

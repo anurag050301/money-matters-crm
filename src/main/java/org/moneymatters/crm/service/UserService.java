@@ -1,7 +1,5 @@
 package org.moneymatters.crm.service;
 
-import org.modelmapper.ModelMapper;
-import org.moneymatters.crm.component.UserMapper;
 import org.moneymatters.crm.dto.UserDto;
 import org.moneymatters.crm.entity.User;
 
