@@ -3,6 +3,7 @@ package org.moneymatters.crm.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "users")
 @Getter
