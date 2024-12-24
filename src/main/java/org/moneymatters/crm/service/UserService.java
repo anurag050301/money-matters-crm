@@ -1,6 +1,9 @@
 package org.moneymatters.crm.service;
 
-import org.moneymatters.crm.model.User;
+import org.modelmapper.ModelMapper;
+import org.moneymatters.crm.component.UserMapper;
+import org.moneymatters.crm.dto.UserDto;
+import org.moneymatters.crm.entity.User;
 
 import java.util.List;
 
@@ -11,13 +14,13 @@ public interface UserService {
     List<User> getAllUsers();
 
     //Get user by ID
-    User getUser(long id);
+    UserDto getUser(long id);
 
     //Add a user
-    User addUser(User newUser);
+    UserDto addUser(UserDto userDto);
 
     //Update details of a User;
-    User updateUserDetails(User newDetails);
+    UserDto updateUserDetails(UserDto userDto);
 
     //Delete User
     String deleteUser(long id);

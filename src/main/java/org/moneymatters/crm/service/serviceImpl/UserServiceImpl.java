@@ -1,6 +1,8 @@
 package org.moneymatters.crm.service.serviceImpl;
 
-import org.moneymatters.crm.model.User;
+import org.moneymatters.crm.component.UserMapper;
+import org.moneymatters.crm.dto.UserDto;
+import org.moneymatters.crm.entity.User;
 import org.moneymatters.crm.repository.UserRepository;
 import org.moneymatters.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +16,35 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
     @Override
     public List<User> getAllUsers() {
         return (List<User>)userRepo.findAll();
     }
 
     @Override
-    public User getUser(long id) {
-        return userRepo.findById(id).orElse(null);
+    public UserDto getUser(long id) {
+        UserDto userDto = userMapper.toDto(userRepo.findById(id).orElse(null));
+        System.out.println(userDto);
+        return userDto;
     }
 
     @Override
-    public User addUser(User user) {
-        return userRepo.save(user);
+    public UserDto addUser(UserDto userDto) {
+        User user = userMapper.toEntity(userDto);
+        System.out.println(user);
+        return userMapper.toDto(userRepo.save(user));
     }
 
     @Override
-    public User updateUserDetails(User user) {
-        User save = userRepo.save(user);
-        return user;
+    public UserDto updateUserDetails(UserDto userDto) {
+        User user= userMapper.toEntity(userDto);
+        return userMapper.toDto(userRepo.save(user));
     }
 
     @Override

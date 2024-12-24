@@ -1,6 +1,7 @@
 package org.moneymatters.crm.restController;
 
-import org.moneymatters.crm.model.User;
+import org.moneymatters.crm.dto.UserDto;
+import org.moneymatters.crm.entity.User;
 import org.moneymatters.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class UserController {
 
     //Get Users on the basis of id;
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id){
+    public ResponseEntity<UserDto> getUser(@PathVariable long id){
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
@@ -32,15 +33,15 @@ public class UserController {
     //Add a new User Detail
     @PostMapping("/user/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        return new ResponseEntity<>(userService.addUser(user), HttpStatus.OK);
+    public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto){
+        return new ResponseEntity<>(userService.addUser(userDto), HttpStatus.OK);
     }
 
 
     //Update User Detail
     @PutMapping("/user/update")
-    public ResponseEntity<User> updateDetails(@RequestBody User user){
-        return new ResponseEntity<>(userService.updateUserDetails(user), HttpStatus.OK);
+    public ResponseEntity<UserDto> updateDetails(@RequestBody UserDto userDto){
+        return new ResponseEntity<>(userService.updateUserDetails(userDto), HttpStatus.OK);
     }
 
 
