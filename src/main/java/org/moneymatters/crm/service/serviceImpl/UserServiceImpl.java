@@ -1,7 +1,8 @@
-package org.moneymatters.crm.service;
+package org.moneymatters.crm.service.serviceImpl;
 
-import org.moneymatters.crm.entity.User;
+import org.moneymatters.crm.model.User;
 import org.moneymatters.crm.repository.UserRepository;
+import org.moneymatters.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

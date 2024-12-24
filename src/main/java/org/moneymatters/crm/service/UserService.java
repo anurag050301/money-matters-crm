@@ -1,7 +1,6 @@
 package org.moneymatters.crm.service;
 
-import org.moneymatters.crm.entity.User;
-import org.springframework.http.ResponseEntity;
+import org.moneymatters.crm.model.User;
 
 import java.util.List;
 

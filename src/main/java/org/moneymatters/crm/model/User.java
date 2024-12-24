@@ -1,4 +1,4 @@
-package org.moneymatters.crm.entity;
+package org.moneymatters.crm.model;
 
 import jakarta.persistence.*;
 import lombok.*;

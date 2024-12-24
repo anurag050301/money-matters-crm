@@ -1,0 +1,12 @@
+${AnsiColor.GREEN}
+   __      __     __      __      _________
+  |  \    /  |   |  \    /  |    /
+  |   \  /   |   |   \  /   |   |
+  |    \/    |   |    \/    |   |
+  |          |   |          |   |
+  |          |   |          |    \_________
+
+Application: ${spring.application.name}
+Spring Boot Version: ${spring-boot.version}
+Java Version: ${java.version}
+${AnsiColor.DEFAULT}

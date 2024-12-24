@@ -1,6 +1,6 @@
-package org.moneymatters.crm.controller;
+package org.moneymatters.crm.restController;
 
-import org.moneymatters.crm.entity.User;
+import org.moneymatters.crm.model.User;
 import org.moneymatters.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +18,14 @@ public class UserController {
     //Get all the Users
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(){
-        return ResponseEntity.ok(userService.getAllUsers());
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
 
     //Get Users on the basis of id;
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable long id){
-        return ResponseEntity.ok(userService.getUser(id));
+        return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
 
@@ -33,20 +33,20 @@ public class UserController {
     @PostMapping("/user/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity<User> addUser(@RequestBody User user){
-        return ResponseEntity.ok(userService.addUser(user));
+        return new ResponseEntity<>(userService.addUser(user), HttpStatus.OK);
     }
 
 
     //Update User Detail
     @PutMapping("/user/update")
     public ResponseEntity<User> updateDetails(@RequestBody User user){
-        return ResponseEntity.ok(userService.updateUserDetails(user));
+        return new ResponseEntity<>(userService.updateUserDetails(user), HttpStatus.OK);
     }
 
 
     //Delete User
     @DeleteMapping("/user/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable long id){
-        return ResponseEntity.ok(userService.deleteUser(id));
+        return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
     }
 }
