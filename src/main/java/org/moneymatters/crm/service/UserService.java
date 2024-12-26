@@ -14,6 +14,10 @@ public interface UserService {
     // Convert UserDto to User entity
     public User toEntity(UserDto userDto);
 
+    public User findByUsername(String username);
+
+    public User findByEmail(String email);
+
     //Get all users
     List<User> getAllUsers();
 

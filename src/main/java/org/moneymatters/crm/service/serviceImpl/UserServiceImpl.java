@@ -17,46 +17,58 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepo;
 
     @Autowired
-    private final ModelMapper userMapper;
+    ModelMapper userMapper;
 
-    public UserServiceImpl(ModelMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 
     // Convert User entity to UserDto
     public UserDto toDto(User user) {
-        return userMapper.map(user, UserDto.class);
+        UserDto userDto = userMapper.map(user,UserDto.class);
+        return userDto;
     }
 
     // Convert UserDto to User entity
     public User toEntity(UserDto userDto) {
-        return userMapper.map(userDto, User.class);
+        User responseUser = userMapper.map(userDto,User.class);
+        return responseUser;
+    }
+
+    @Override
+    public User findByUsername(String username){
+        User user = userRepo.findByUsername(username);
+        return user;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User user = userRepo.findByEmail(email);
+        return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>)userRepo.findAll();
+        List<User> allUsers = (List<User>) userRepo.findAll();
+        return allUsers;
     }
 
     @Override
     public UserDto getUser(long id) {
         User user = userRepo.findById(id).orElse(null);
         UserDto userDto = this.toDto(user);
-        System.out.println(userDto);
         return userDto;
     }
 
     @Override
     public UserDto addUser(UserDto userDto) {
         User user = this.toEntity(userDto);
-        System.out.println(user);
-        return this.toDto(userRepo.save(user));
+        UserDto responseUserDto = this.toDto(userRepo.save(user));
+        return responseUserDto;
     }
 
     @Override
     public UserDto updateUserDetails(UserDto userDto) {
         User user= this.toEntity(userDto);
-        return this.toDto(userRepo.save(user));
+        UserDto responseUserDto = this.toDto(userRepo.save(user));
+        return responseUserDto;
     }
 
     @Override
