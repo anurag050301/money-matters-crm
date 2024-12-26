@@ -1,6 +1,6 @@
 package org.moneymatters.crm.service.serviceImpl;
 
-import org.moneymatters.crm.component.UserMapper;
+import org.modelmapper.ModelMapper;
 import org.moneymatters.crm.dto.UserDto;
 import org.moneymatters.crm.entity.User;
 import org.moneymatters.crm.repository.UserRepository;
@@ -17,11 +17,22 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepo;
 
     @Autowired
-    private final UserMapper userMapper;
+    private final ModelMapper userMapper;
 
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(ModelMapper userMapper) {
         this.userMapper = userMapper;
     }
+
+    // Convert User entity to UserDto
+    public UserDto toDto(User user) {
+        return userMapper.map(user, UserDto.class);
+    }
+
+    // Convert UserDto to User entity
+    public User toEntity(UserDto userDto) {
+        return userMapper.map(userDto, User.class);
+    }
+
     @Override
     public List<User> getAllUsers() {
         return (List<User>)userRepo.findAll();
@@ -29,22 +40,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(long id) {
-        UserDto userDto = userMapper.toDto(userRepo.findById(id).orElse(null));
+        User user = userRepo.findById(id).orElse(null);
+        UserDto userDto = this.toDto(user);
         System.out.println(userDto);
         return userDto;
     }
 
     @Override
     public UserDto addUser(UserDto userDto) {
-        User user = userMapper.toEntity(userDto);
+        User user = this.toEntity(userDto);
         System.out.println(user);
-        return userMapper.toDto(userRepo.save(user));
+        return this.toDto(userRepo.save(user));
     }
 
     @Override
     public UserDto updateUserDetails(UserDto userDto) {
-        User user= userMapper.toEntity(userDto);
-        return userMapper.toDto(userRepo.save(user));
+        User user= this.toEntity(userDto);
+        return this.toDto(userRepo.save(user));
     }
 
     @Override

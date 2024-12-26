@@ -10,10 +10,6 @@ public class MoneyMattersCrmApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MoneyMattersCrmApplication.class, args);
-//        User user = new User();
-//        UserDto userDto = new UserDto();
-//        System.out.println(user);
-//        System.out.println(userDto);
     }
 
     @Bean

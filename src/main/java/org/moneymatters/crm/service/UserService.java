@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface UserService {
 
+    // Convert User entity to UserDto
+    public UserDto toDto(User user) ;
+
+    // Convert UserDto to User entity
+    public User toEntity(UserDto userDto);
+
     //Get all users
     List<User> getAllUsers();
 
