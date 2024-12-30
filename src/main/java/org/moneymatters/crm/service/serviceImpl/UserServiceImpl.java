@@ -3,12 +3,14 @@ package org.moneymatters.crm.service.serviceImpl;
 import org.modelmapper.ModelMapper;
 import org.moneymatters.crm.dto.UserDto;
 import org.moneymatters.crm.entity.User;
+import org.moneymatters.crm.exception.UserNotFoundException;
 import org.moneymatters.crm.repository.UserRepository;
 import org.moneymatters.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(long id) {
-        User user = userRepo.findById(id).orElse(null);
+        User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User id:"+id+" Not Found."));
         UserDto userDto = this.toDto(user);
         return userDto;
     }

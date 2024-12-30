@@ -1,8 +1,11 @@
 package org.moneymatters.crm.restController;
 
 import jakarta.validation.Valid;
+import org.moneymatters.crm.dto.ErrorDetails;
 import org.moneymatters.crm.dto.UserDto;
 import org.moneymatters.crm.entity.User;
+import org.moneymatters.crm.exception.UserAlreadyExistsException;
+import org.moneymatters.crm.exception.ValidationException;
 import org.moneymatters.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,29 +45,24 @@ public class UserController {
     @PostMapping("/user/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity<?> addUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
+        StringBuilder msg = new StringBuilder();
         if (bindingResult.hasErrors()) {
-            Map<String, Map<String, String>> errors = new HashMap<>();
             List<FieldError> allErrors = bindingResult.getFieldErrors();
-            Map<String, String> err = new HashMap<>();
-            for(FieldError error: allErrors){
-                err.put(error.getField(),error.getDefaultMessage());
+            for (FieldError error : allErrors) {
+                msg.append(error.getDefaultMessage());
+                msg.append("; ");
             }
-            errors.put("Errors",err);
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
-        List<String> availabilityError = new ArrayList<>();
         User availableUser = userService.findByUsername(userDto.getUsername());
-        if(availableUser !=null){
-           availabilityError.add("Username Already Exists");
-            System.out.println("username");
+        if (availableUser != null) {
+            msg.append("Username Already Exists. ");
         }
         availableUser = userService.findByEmail(userDto.getEmail());
-        if(availableUser != null){
-            availabilityError.add("Email Already Exists");
-            System.out.println("email");
+        if (availableUser != null) {
+            msg.append("Email Already Exists. ");
         }
-        if(availableUser!=null){
-            return new ResponseEntity<>(availabilityError, HttpStatus.BAD_REQUEST);
+        if (!msg.isEmpty()) {
+            throw new ValidationException(msg.toString());
         }
         UserDto responseUserDto = userService.addUser(userDto);
         return new ResponseEntity<>(responseUserDto, HttpStatus.OK);
@@ -74,29 +72,25 @@ public class UserController {
     //Update User Detail
     @PutMapping("/user/update")
     public ResponseEntity<?> updateDetails(@RequestBody UserDto userDto, BindingResult bindingResult) {
+        StringBuilder msg = new StringBuilder();
         if (bindingResult.hasErrors()) {
-            Map<String, Map<String, String>> errors = new HashMap<>();
             List<FieldError> allErrors = bindingResult.getFieldErrors();
-            Map<String, String> err = new HashMap<>();
-            for(FieldError error: allErrors){
-                err.put(error.getField(),error.getDefaultMessage());
+            for (FieldError error : allErrors) {
+                System.out.println(error.getDefaultMessage());
+                msg.append(error.getDefaultMessage());
+                msg.append("; ");
             }
-            errors.put("Errors",err);
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
-        List<String> availabilityError = new ArrayList<>();
         User availableUser = userService.findByUsername(userDto.getUsername());
-        if(availableUser !=null && !Objects.equals(availableUser.getId(), userDto.getId())){
-            availabilityError.add("Username Already Exists");
-            System.out.println("username");
+        if (availableUser != null && !Objects.equals(availableUser.getId(), userDto.getId())) {
+            msg.append("Username Already Exists. ");
         }
         availableUser = userService.findByEmail(userDto.getEmail());
-        if(availableUser != null && !Objects.equals(availableUser.getId(), userDto.getId())){
-            availabilityError.add("Email Already Exists");
-            System.out.println("email");
+        if (availableUser != null && !Objects.equals(availableUser.getId(), userDto.getId())) {
+            msg.append("Email Already Exists");
         }
-        if(availableUser!=null && availableUser.getId()!=userDto.getId()){
-            return new ResponseEntity<>(availabilityError, HttpStatus.BAD_REQUEST);
+        if (!msg.isEmpty()) {
+            throw new ValidationException(msg.toString());
         }
 
         UserDto responseUserDto = userService.updateUserDetails(userDto);
