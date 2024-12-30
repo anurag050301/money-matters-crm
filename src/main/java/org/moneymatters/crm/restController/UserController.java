@@ -70,6 +70,7 @@ public class UserController {
         return new ResponseEntity<>(responseUserDto, HttpStatus.OK);
     }
 
+
     //Update User Detail
     @PutMapping("/user/update")
     public ResponseEntity<?> updateDetails(@RequestBody UserDto userDto, BindingResult bindingResult) {
@@ -85,22 +86,23 @@ public class UserController {
         }
         List<String> availabilityError = new ArrayList<>();
         User availableUser = userService.findByUsername(userDto.getUsername());
-        if(availableUser !=null && availableUser.getId()!=userDto.getId()){
+        if(availableUser !=null && !Objects.equals(availableUser.getId(), userDto.getId())){
             availabilityError.add("Username Already Exists");
             System.out.println("username");
         }
         availableUser = userService.findByEmail(userDto.getEmail());
-        if(availableUser != null && availableUser.getId()!=userDto.getId()){
+        if(availableUser != null && !Objects.equals(availableUser.getId(), userDto.getId())){
             availabilityError.add("Email Already Exists");
             System.out.println("email");
         }
-        if(availableUser!=null){
+        if(availableUser!=null && availableUser.getId()!=userDto.getId()){
             return new ResponseEntity<>(availabilityError, HttpStatus.BAD_REQUEST);
         }
 
         UserDto responseUserDto = userService.updateUserDetails(userDto);
         return new ResponseEntity<>(responseUserDto, HttpStatus.OK);
     }
+
 
     //Delete User
     @DeleteMapping("/user/delete/{id}")

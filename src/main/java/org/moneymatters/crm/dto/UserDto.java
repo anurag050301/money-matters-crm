@@ -2,6 +2,7 @@ package org.moneymatters.crm.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.moneymatters.crm.entity.User;
 
 @Getter
 @Setter
@@ -24,4 +25,5 @@ public class UserDto {
     private String password;
     @NotBlank(message = "Country Field is Blank") @Pattern(regexp = "^[a-zA-Z]{2,}", message = "Invalid Country")
     private String country;
+
 }
