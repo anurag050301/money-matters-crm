@@ -1,25 +1,25 @@
 package org.moneymatters.crm.service;
 
 import org.moneymatters.crm.dto.UserDto;
-import org.moneymatters.crm.entity.User;
+import org.moneymatters.crm.entity.Users;
 
 import java.util.List;
 
 
 public interface UserService {
 
-    // Convert User entity to UserDto
-    public UserDto toDto(User user) ;
+    // Convert Users entity to UserDto
+    public UserDto toDto(Users user) ;
 
-    // Convert UserDto to User entity
-    public User toEntity(UserDto userDto);
+    // Convert UserDto to Users entity
+    public Users toEntity(UserDto userDto);
 
-    public User findByUsername(String username);
+    public Users findByUsername(String username);
 
-    public User findByEmail(String email);
+    public Users findByEmail(String email);
 
     //Get all users
-    List<User> getAllUsers();
+    List<Users> getAllUsers();
 
     //Get user by ID
     UserDto getUser(long id);

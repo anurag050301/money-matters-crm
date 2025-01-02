@@ -3,7 +3,7 @@ package org.moneymatters.crm.restController;
 import jakarta.validation.Valid;
 import org.moneymatters.crm.dto.ErrorDetails;
 import org.moneymatters.crm.dto.UserDto;
-import org.moneymatters.crm.entity.User;
+import org.moneymatters.crm.entity.Users;
 import org.moneymatters.crm.exception.UserAlreadyExistsException;
 import org.moneymatters.crm.exception.ValidationException;
 import org.moneymatters.crm.service.UserService;
@@ -21,14 +21,11 @@ import java.util.*;
 public class UserController {
     @Autowired
     UserService userService;
-    @Autowired
-    private View error;
-
 
     //Get all the Users
-    @GetMapping("/users")
+    @GetMapping("/user/all")
     public ResponseEntity<?> getAllUsers() {
-        List<User> allUsers = userService.getAllUsers();
+        List<Users> allUsers = userService.getAllUsers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
@@ -53,7 +50,7 @@ public class UserController {
                 msg.append("; ");
             }
         }
-        User availableUser = userService.findByUsername(userDto.getUsername());
+        Users availableUser = userService.findByUsername(userDto.getUsername());
         if (availableUser != null) {
             msg.append("Username Already Exists. ");
         }
@@ -81,7 +78,7 @@ public class UserController {
                 msg.append("; ");
             }
         }
-        User availableUser = userService.findByUsername(userDto.getUsername());
+        Users availableUser = userService.findByUsername(userDto.getUsername());
         if (availableUser != null && !Objects.equals(availableUser.getId(), userDto.getId())) {
             msg.append("Username Already Exists. ");
         }

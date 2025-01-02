@@ -3,6 +3,9 @@ package org.moneymatters.crm.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.security.Key;
+import java.util.List;
+
 @SuppressWarnings("ALL")
 @Entity
 @Getter
@@ -11,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Table(name = "users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +35,6 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String country;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Orders> orders;
 }
